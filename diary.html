@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>G-Diary</title>
+
+    <link rel="stylesheet" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">    
+    <script src="diary.js"></script>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+  </head>
+
+	<body ng-app="diaryApp">
+	<div ng-controller="DiaryCtrl">
+		<div class="header">
+			<div class="title float-left">
+				Gentle Diary
+			</div>
+			<div class="menu float-right">
+				<span class="today">{{todayDate | date:'MMMM dd, yyyy' | uppercase}}</span>
+				<span class="btns"><a ng-click="write_diary()">Let's write<a/></span>
+			</div>
+		</div>
+
+		<script>
+			function factory_movie(title){
+				return{
+					get_title: function(){
+						return title;
+					},
+					set_title: function(_title){
+						title = _title;
+					}
+				}
+			}
+			ghost = factory_movie('Ghost in the shell');
+			matrix = factory_movie('Matrix');
+			console.log(ghost.get_title());
+			ghost.set_title('GIS');
+			console.log(ghost.get_title());
+
+		</script>
+
+
+
+		<div id="contents">
+			<div ng-repeat="data in datas | orderBy:'-id' track by $index">
+			<div class="diary-box" ng-click="called(data.id, data.diary, data.date)">
+				<div class="diary-header">
+					<div class="dd">{{ data.date | date:'dd'}}</div>
+					<div class="mm">{{ data.date | date:'MMM' | uppercase}}</div>			
+				</div>
+				<div class="cats">
+					<textarea class="noresize" ng-model="data.diary" readonly></textarea>
+				</div>
+				<div class="cover-bar"></div>						
+			</div>	
+			</div>
+		</div>
+
+
+		<div class="write">
+
+			<form>
+				<label>POST DIARY</label>		
+				<textarea id="note" name="note" placeholder="What happened today?" ng-blur="closebox()" ng-model="newDiary"></textarea>		
+			</form>
+		</div>
+
+		<div class="edit">
+			<form>
+				<label>EDIT TODAY</label>
+				<textarea id="note_edit" name="note_edit" ng-model="editDiary" ng-blur="closebox()"></textarea>
+			</form>
+		</div>
+
+
+		<div class="footer">
+			<div class="w-100 text-right">
+				<div class="haha">This is a demonstration page<br>created by GentleBae<br>gentlebae@gmail.com<br><br>
+					 <a href="http://gentlebae.com/gentle_diary">TRY OUR APP</a>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+	</body>
+</html>
